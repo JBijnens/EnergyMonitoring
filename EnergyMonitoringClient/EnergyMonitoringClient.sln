@@ -5,6 +5,11 @@ VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnergyMonitoringClient", "EnergyMonitoringClient\EnergyMonitoringClient.csproj", "{A43A4ACC-D7EC-4F22-B9C6-BB9D4F4DBC1A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BB5AB652-56E6-4194-AAE8-BDD6903DAB8B}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitignore = ..\.gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
