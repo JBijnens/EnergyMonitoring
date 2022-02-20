@@ -1,2 +1,4 @@
+# Git pull
 git pull
-dotnet run EnergyMonitoring/EnergyMonitoringClient/EnergyMonitoringClient/EnergyMonitoringClient.csproj
+# Run project
+dotnet run --project EnergyMonitoring/EnergyMonitoringClient/EnergyMonitoringClient/EnergyMonitoringClient.csproj -v m
