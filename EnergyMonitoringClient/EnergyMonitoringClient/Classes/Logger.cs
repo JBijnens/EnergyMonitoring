@@ -42,6 +42,13 @@ namespace EnergyMonitoringClient.Classes
         {
             if (telemetryClient == null) return;            
             telemetryClient.TrackEvent(eventName);
+            telemetryClient.Flush();            
+        }
+
+        public void TrackMetric(string name, double value)
+        {
+            if (telemetryClient == null) return;
+            telemetryClient.TrackMetric(name, value);
             telemetryClient.Flush();
         }
     }
