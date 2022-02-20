@@ -1,0 +1,2 @@
+git pull
+dotnet run EnergyMonitoring/EnergyMonitoringClient/EnergyMonitoringClient/EnergyMonitoringClient.csproj
