@@ -42,24 +42,22 @@ namespace EnergyMonitoringClient.Classes
 
         public void TrackEvent(string name)
         {
+            if (telemetryClient == null) return;
+            telemetryClient.TrackEvent(name);
             LogConsole("TrackEvent - " + name);
-            if (telemetryClient != null)
-            {
-                telemetryClient.TrackEvent(name);
-            }
         }
 
         public void TrackMetric(string name, double value)
         {
-            LogConsole("TrackMetric - " + name + " - " + value);
             if (telemetryClient == null) return;
             telemetryClient.TrackMetric(name, value);
+            LogConsole("TrackMetric - " + name + " - " + value);
         }
 
         public void TrackAvailability(string name)
         {
-            LogConsole("TrackAvailability - " + name);
             if (telemetryClient == null) return;
+            LogConsole("TrackAvailability - " + name);            
             telemetryClient.TrackAvailability(name, DateTime.Now, TimeSpan.FromSeconds(1), name, true);
         }
 
