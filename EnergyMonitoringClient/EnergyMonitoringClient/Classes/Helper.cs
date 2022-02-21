@@ -9,7 +9,9 @@ namespace EnergyMonitoringClient.Classes
 {
     internal enum AppSettings
     {
-        AppInsights_InstrumentationKey
+        AppInsights_InstrumentationKey,
+        UbiDots_Token,
+        UbiDots_DataUrl
     }
 
     internal class Helper

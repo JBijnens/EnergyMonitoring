@@ -27,9 +27,12 @@ void timerCallBack01(object? obj)
         {
             Logger.Current.TrackMetric(temperatureMetric + temperature.Sensor, temperature.Temperature.DegreesCelsius);
         }
-        
+
+        var dataItem = new DataItem();
+        dataItem.CPUTemperature = cpuTemperature.Temperature.DegreesCelsius;
+        UbiDotsDataManager.Current.LogData(machineName,dataItem);
     }
-    
+
     // Flush log
     Logger.Current.Flush();
 }
