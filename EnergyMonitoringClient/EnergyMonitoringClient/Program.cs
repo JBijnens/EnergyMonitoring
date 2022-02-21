@@ -16,7 +16,7 @@ TimingManager.Current.Callback = timerCallBack01;
 
 void timerCallBack01(object? obj)
 {
-    Console.WriteLine("Triggered");
+    Console.WriteLine("----");
     Logger.Current.TrackAvailability(machineName);
 
     // Log temperature
@@ -34,7 +34,6 @@ void timerCallBack01(object? obj)
     Logger.Current.Flush();
 }
 
-Console.WriteLine("Start loop");
 while (true)
 {
     // Do nothing

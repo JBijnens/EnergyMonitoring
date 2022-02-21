@@ -40,20 +40,25 @@ namespace EnergyMonitoringClient.Classes
             }
         }
 
-        public void TrackEvent(string eventName)
+        public void TrackEvent(string name)
         {
-            if (telemetryClient == null) return;
-            telemetryClient.TrackEvent(eventName);
+            LogConsole("TrackEvent - " + name);
+            if (telemetryClient != null)
+            {
+                telemetryClient.TrackEvent(name);
+            }
         }
 
         public void TrackMetric(string name, double value)
         {
+            LogConsole("TrackMetric - " + name + " - " + value);
             if (telemetryClient == null) return;
             telemetryClient.TrackMetric(name, value);
         }
 
         public void TrackAvailability(string name)
         {
+            LogConsole("TrackAvailability - " + name);
             if (telemetryClient == null) return;
             telemetryClient.TrackAvailability(name, DateTime.Now, TimeSpan.FromSeconds(1), name, true);
         }
@@ -61,6 +66,11 @@ namespace EnergyMonitoringClient.Classes
         public void Flush()
         {
             telemetryClient.Flush();
+        }
+
+        public void LogConsole(string what)
+        {
+            Console.WriteLine(DateTime.Now.ToString("O") + " - " + what);
         }
     }
 }
