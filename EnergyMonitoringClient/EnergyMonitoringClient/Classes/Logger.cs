@@ -25,6 +25,8 @@ namespace EnergyMonitoringClient.Classes
         }
 
         private TelemetryClient? telemetryClient = null;
+        private int flushCounter = 0;
+        private int flushMaxCounter = 5;
 
         public Logger()
         {
@@ -40,15 +42,24 @@ namespace EnergyMonitoringClient.Classes
 
         public void TrackEvent(string eventName)
         {
-            if (telemetryClient == null) return;            
+            if (telemetryClient == null) return;
             telemetryClient.TrackEvent(eventName);
-            telemetryClient.Flush();            
         }
 
         public void TrackMetric(string name, double value)
         {
             if (telemetryClient == null) return;
             telemetryClient.TrackMetric(name, value);
+        }
+
+        public void TrackAvailability(string name)
+        {
+            if (telemetryClient == null) return;
+            telemetryClient.TrackAvailability(name, DateTime.Now, TimeSpan.FromSeconds(1), name, true);
+        }
+
+        public void Flush()
+        {
             telemetryClient.Flush();
         }
     }

@@ -1,18 +1,42 @@
 ﻿using EnergyMonitoringClient.Classes;
+using Iot.Device.CpuTemperature;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 
-Logger.Current.TrackEvent("test 4645646");
+string machineName = Environment.MachineName;
+Logger.Current.TrackEvent("Start client on '" + machineName + "'");
+Logger.Current.TrackAvailability(machineName);
 
+// CPU Temperature
+CpuTemperature cpuTemperature = new CpuTemperature();
+string temperatureMetric = machineName + ".CPUTemperature.";
 
+// Timer configuration
+TimingManager.Current.Callback = timerCallBack01;
 
-
-for (int i = 0; i < 100; i++)
+void timerCallBack01(object? obj)
 {
-    Console.WriteLine("Tracking event " + i);
-    Logger.Current.TrackMetric("Temperature", i);
+    Console.WriteLine("Triggered");
+    Logger.Current.TrackAvailability(machineName);
+
+    // Log temperature
+    if(cpuTemperature.IsAvailable)
+    {
+        var temperatures = cpuTemperature.ReadTemperatures();
+        foreach (var temperature in temperatures)
+        {
+            Logger.Current.TrackMetric(temperatureMetric + temperature.Sensor, temperature.Temperature.DegreesCelsius);
+        }
         
+    }
+    
+    // Flush log
+    Logger.Current.Flush();
 }
 
-
+Console.WriteLine("Start loop");
+while (true)
+{
+    // Do nothing
+}
 Console.WriteLine("Done");
