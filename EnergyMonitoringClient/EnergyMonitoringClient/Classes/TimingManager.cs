@@ -33,6 +33,7 @@ namespace EnergyMonitoringClient.Classes
 
         private void timerCallback(object? state)
         {
+            Console.WriteLine("Trigger time " + DateTime.Now.ToString("O"));
             if (Callback != null) Callback(state);
         }
     }
