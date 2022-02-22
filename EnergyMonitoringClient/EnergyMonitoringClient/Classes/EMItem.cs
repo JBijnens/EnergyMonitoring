@@ -6,15 +6,13 @@ using System.Threading.Tasks;
 
 namespace EnergyMonitoringClient.Classes
 {
-    internal abstract class DataConsumerBase
+    internal class EMItem
     {
-        internal DataConsumerBase()
+        public DataItem CPUTemperature { get; private set; }
+
+        public EMItem()
         {
-
+            CPUTemperature = new DataItem();
         }
-
-        internal abstract void LogEvent(string eventName, object? data = null);
-
-
     }
 }

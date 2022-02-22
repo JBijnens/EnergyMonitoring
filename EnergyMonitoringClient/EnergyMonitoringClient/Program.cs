@@ -7,9 +7,14 @@ string machineName = Environment.MachineName;
 Logger.Current.TrackEvent("Start client on '" + machineName + "'");
 Logger.Current.TrackAvailability(machineName);
 
-// CPU Temperature
-CpuTemperature cpuTemperature = new CpuTemperature();
-string temperatureMetric = machineName + ".CPUTemperature.";
+var dataConsumers = new List<DataConsumerBase>();
+dataConsumers.Add(new ConsoleDataConsumer());
+
+// Log start
+dataConsumers.ForEach(a => a.LogEvent(Helper.MachineName + ": Start"));
+
+// Main data object
+var mainData = new EMItem();
 
 // Timer configuration
 TimingManager.Current.Callback = timerCallBack01;
@@ -17,24 +22,12 @@ TimingManager.Current.Callback = timerCallBack01;
 void timerCallBack01(object? obj)
 {
     Console.WriteLine("----");
-    Logger.Current.TrackAvailability(machineName);
 
-    // Log temperature
-    if(cpuTemperature.IsAvailable)
-    {
-        var temperatures = cpuTemperature.ReadTemperatures();
-        foreach (var temperature in temperatures)
-        {
-            Logger.Current.TrackMetric(temperatureMetric + temperature.Sensor, temperature.Temperature.DegreesCelsius);
-        }
+    var temps = Helper.GetTemperatures();
+    mainData.CPUTemperature.AddValue(temps.First().Value);
 
-        var dataItem = new DataItem();
-        dataItem.CPUTemperature = cpuTemperature.Temperature.DegreesCelsius;
-        UbiDotsDataManager.Current.LogData(machineName,dataItem);
-    }
+    dataConsumers.ForEach(a => a.LogEvent("Loop", mainData));
 
-    // Flush log
-    Logger.Current.Flush();
 }
 
 while (true)
