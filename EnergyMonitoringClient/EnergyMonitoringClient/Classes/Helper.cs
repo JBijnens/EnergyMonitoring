@@ -15,10 +15,17 @@ namespace EnergyMonitoringClient.Classes
     }
 
     internal class Helper
-    {        
+    {
+        public static string MachineName
+        {
+            get { return Environment.MachineName; }
+        }        
+
         public static string? GetAppSetting(AppSettings setting)
         {
             return ConfigurationManager.AppSettings[setting.ToString()];
         }
+
+
     }
 }
