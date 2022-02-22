@@ -15,7 +15,7 @@ namespace EnergyMonitoringClient.Classes
         private WebClient client = null;
 
         internal UbidotsDataConsumer()
-        {
+        {            
             Logger.Current.LogConsole("UbidotsDataConsumer created");
             token = Helper.GetAppSetting(AppSettings.UbiDots_Token);
             dataUrl = Helper.GetAppSetting(AppSettings.UbiDots_DataUrl);
@@ -25,17 +25,31 @@ namespace EnergyMonitoringClient.Classes
             client.Headers.Add("Content-Type", "application/json");
         }
 
-        internal override void LogEvent(string eventName, object? data)
+        internal UbidotsDataConsumer(int logInterval) : this()
         {
-            if (token == null || dataUrl == null) return;
-
-            Logger.Current.LogConsole("Ubidots - LogData");
-            string fullUrl = dataUrl + Helper.MachineName;
-            string dataJSON = JsonConvert.SerializeObject(data);
-
-            client.UploadData(fullUrl, Encoding.UTF8.GetBytes(dataJSON));
+            LogPeriod = logInterval;
         }
 
-       
+        internal override void LogEvent(string eventName, object? data)
+        {
+            // Not implemented
+        }
+
+        internal override void LogData(EMItem mainData)
+        {
+            if (!ShouldRun()) return;
+
+            Console.WriteLine("LogData Ubidots");
+            string fullUrl = dataUrl + Helper.MachineName;
+                        
+            var ubidotsData = new UbidotsDataItem(Helper.GetEpochTime(DateTime.Now), mainData);
+            var serializedData = JsonConvert.SerializeObject(ubidotsData);
+            Console.WriteLine("Data: " + serializedData);
+            client.UploadData(fullUrl, Encoding.UTF8.GetBytes(serializedData));
+
+            LastLoggedPeriod = CurrentPeriod;
+        }       
     }
+
+    
 }

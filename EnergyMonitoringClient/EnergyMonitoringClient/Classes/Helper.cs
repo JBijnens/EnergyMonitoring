@@ -17,13 +17,13 @@ namespace EnergyMonitoringClient.Classes
 
     internal class Helper
     {
-        public static string MachineName
+        internal static string MachineName
         {
             get { return Environment.MachineName; }
         }
 
         private static CpuTemperature cpuTemperature = new CpuTemperature();
-        public static Dictionary<string, double> GetTemperatures()
+        internal static Dictionary<string, double> GetTemperatures()
         {
             Dictionary<string, double> temperatures = new Dictionary<string, double>();
             if (cpuTemperature.IsAvailable)
@@ -41,9 +41,15 @@ namespace EnergyMonitoringClient.Classes
             return temperatures;
         }
 
-        public static string? GetAppSetting(AppSettings setting)
+        internal static string? GetAppSetting(AppSettings setting)
         {
             return ConfigurationManager.AppSettings[setting.ToString()];
+        }
+
+        internal static long GetEpochTime(DateTime dateTime)
+        {
+            // https://www.epochconverter.com/
+            return ((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds() * 1000;
         }
 
 

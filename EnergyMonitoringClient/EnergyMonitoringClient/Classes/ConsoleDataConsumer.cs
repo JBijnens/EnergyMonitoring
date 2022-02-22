@@ -25,5 +25,13 @@ namespace EnergyMonitoringClient.Classes
                 Console.WriteLine(DateTime.Now.ToString("O") + " - Event '" + eventName + "': " + JsonConvert.SerializeObject(data));
             }
         }
+
+        internal override void LogData(EMItem data)
+        {
+            if (data == null)
+            {
+                Console.WriteLine(DateTime.Now.ToString("O") + " - LogData : " + JsonConvert.SerializeObject(data));
+            }
+        }
     }
 }
