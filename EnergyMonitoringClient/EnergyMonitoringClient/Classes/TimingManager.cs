@@ -28,7 +28,7 @@ namespace EnergyMonitoringClient.Classes
         {
             timer = new Timer(timerCallback);
             //timer.Change(1000 * 5, 1000 * 60 * 5);
-            timer.Change(1000 * 1, 1000 * 20);
+            timer.Change(1000 * 1, 1000 * 4);
         }
 
         private void timerCallback(object? state)
